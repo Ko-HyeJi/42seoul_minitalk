@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 20:06:23 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/27 02:42:14 by hyko             ###   ########.fr       */
+/*   Updated: 2022/05/27 02:45:03 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	ft_putnbr(int nb)
 
 void	handler(int sig)
 {
-	//write(1, "\nsignal\n", 8);
 	if (g_cnt < 8)
 	{
 		g_char = g_char << 1;
