@@ -1,43 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:23 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 16:16:41 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/03 19:12:43 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/16 20:58:44 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_signal_handler(int sig)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	static char	c;
-	static int	i;
+	int		i;
+	int		j;
+	char	*s2;
 
-	if (i < 8)
+	s2 = "";
+	if (s1 != 0 && set != 0)
 	{
-		c = c << 1;
-		if (sig == SIGUSR2)
-			c += 1;
-		i++;
-	}
-	if (i == 8)
-	{
-		write(1, &c, 1);
-		c = 0;
 		i = 0;
+		j = ft_strlen(s1) - 1;
+		while (s1[i] != 0 && ft_strchr(set, s1[i]) != 0)
+			i++;
+		while (s1[j] != 0 && ft_strchr(set, s1[j]) != 0 && j > i)
+			j--;
+		s2 = (char *)malloc(sizeof(char) * (j - i + 2));
+		if (s2 == NULL)
+			return (NULL);
+		ft_strlcpy(s2, &s1[i], j - i + 2);
 	}
-}
-
-int	main(void)
-{
-	ft_printf("PID : %d\n", getpid());
-	signal(SIGUSR1, &ft_signal_handler);
-	signal(SIGUSR2, &ft_signal_handler);
-	while (1)
-		pause();
-	return (0);
+	return (s2);
 }

@@ -1,43 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:23 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 16:16:41 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/03 19:09:52 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/16 20:27:33 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_signal_handler(int sig)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	static char	c;
-	static int	i;
+	unsigned char	*tmp;
+	size_t			i;
 
-	if (i < 8)
+	i = 0;
+	tmp = (unsigned char *)s;
+	while (i < n)
 	{
-		c = c << 1;
-		if (sig == SIGUSR2)
-			c += 1;
+		if (tmp[i] == (unsigned char)c)
+			return ((void *)tmp + i);
 		i++;
 	}
-	if (i == 8)
-	{
-		write(1, &c, 1);
-		c = 0;
-		i = 0;
-	}
-}
-
-int	main(void)
-{
-	ft_printf("PID : %d\n", getpid());
-	signal(SIGUSR1, &ft_signal_handler);
-	signal(SIGUSR2, &ft_signal_handler);
-	while (1)
-		pause();
-	return (0);
+	return (NULL);
 }

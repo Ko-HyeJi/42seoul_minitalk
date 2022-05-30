@@ -1,48 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:28 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 15:53:32 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/03 19:11:58 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/16 21:08:48 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_send_signal(char *pid, char c)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int	i;
+	unsigned int	len;
+	unsigned int	i;
+	char			*new_s;
 
-	i = 7;
-	while (i >= 0)
-	{
-		if ((c >> i) % 2 == 0)
-			kill(ft_atoi(pid), SIGUSR1);
-		else
-			kill(ft_atoi(pid), SIGUSR2);
-		i--;
-		usleep(100);
-	}
-}
-
-int	main(int argc, char *argv[])
-{
-	int	i;
-
-	i = 0;
-	if (argc != 3)
-	{
-		ft_printf("./client [PID] [MSG]\n");
+	if (s == 0 || f == 0)
 		return (0);
-	}
-	while (argv[2][i])
+	i = 0;
+	len = (ft_strlen(s));
+	new_s = (char *)malloc(sizeof(char) * (len + 1));
+	if (new_s == NULL)
+		return (NULL);
+	while (i < len)
 	{
-		ft_send_signal(argv[1], argv[2][i]);
+		new_s[i] = f(i, s[i]);
 		i++;
 	}
-	ft_send_signal(argv[1], '\n');
-	return (0);
+	new_s[i] = '\0';
+	return (new_s);
 }

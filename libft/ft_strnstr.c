@@ -1,43 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:23 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 16:16:41 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/03 19:12:29 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/15 23:43:24 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_signal_handler(int sig)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	static char	c;
-	static int	i;
+	size_t	i;
+	size_t	j;
 
-	if (i < 8)
+	if (little[0] == '\0')
+		return ((char *)big);
+	i = 0;
+	while (big[i] != '\0' && i < len)
 	{
-		c = c << 1;
-		if (sig == SIGUSR2)
-			c += 1;
+		j = 0;
+		if (big[i] == little[j])
+		{
+			while (big[i + j] == little[j]
+				&& big[i + j] != '\0' && i + j < len)
+			{
+				j++;
+				if (little[j] == '\0')
+					return ((char *)big + i);
+			}
+		}
 		i++;
 	}
-	if (i == 8)
-	{
-		write(1, &c, 1);
-		c = 0;
-		i = 0;
-	}
-}
-
-int	main(void)
-{
-	ft_printf("PID : %d\n", getpid());
-	signal(SIGUSR1, &ft_signal_handler);
-	signal(SIGUSR2, &ft_signal_handler);
-	while (1)
-		pause();
-	return (0);
+	return (NULL);
 }

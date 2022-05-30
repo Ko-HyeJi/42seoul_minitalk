@@ -1,48 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:28 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 15:53:32 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/03 19:10:00 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/16 01:53:05 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_send_signal(char *pid, char c)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int	i;
-
-	i = 7;
-	while (i >= 0)
-	{
-		if ((c >> i) % 2 == 0)
-			kill(ft_atoi(pid), SIGUSR1);
-		else
-			kill(ft_atoi(pid), SIGUSR2);
-		i--;
-		usleep(100);
-	}
-}
-
-int	main(int argc, char *argv[])
-{
-	int	i;
+	unsigned char	*tmp1;
+	unsigned char	*tmp2;
+	size_t			i;
 
 	i = 0;
-	if (argc != 3)
+	tmp1 = (unsigned char *)s1;
+	tmp2 = (unsigned char *)s2;
+	while (i < n)
 	{
-		ft_printf("./client [PID] [MSG]\n");
-		return (0);
-	}
-	while (argv[2][i])
-	{
-		ft_send_signal(argv[1], argv[2][i]);
+		if (!(tmp1[i] == tmp2[i]))
+			return (tmp1[i] - tmp2[i]);
 		i++;
 	}
-	ft_send_signal(argv[1], '\n');
 	return (0);
 }

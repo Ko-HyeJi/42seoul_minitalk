@@ -1,48 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:28 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 15:53:32 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/03 19:11:11 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/16 01:46:39 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_send_signal(char *pid, char c)
-{
-	int	i;
-
-	i = 7;
-	while (i >= 0)
-	{
-		if ((c >> i) % 2 == 0)
-			kill(ft_atoi(pid), SIGUSR1);
-		else
-			kill(ft_atoi(pid), SIGUSR2);
-		i--;
-		usleep(100);
-	}
-}
-
-int	main(int argc, char *argv[])
+char	*ft_strchr(const char *s, int c)
 {
 	int	i;
 
 	i = 0;
-	if (argc != 3)
+	while (s[i] != '\0')
 	{
-		ft_printf("./client [PID] [MSG]\n");
-		return (0);
-	}
-	while (argv[2][i])
-	{
-		ft_send_signal(argv[1], argv[2][i]);
+		if (s[i] == (unsigned char)c)
+			return ((char *)s + i);
 		i++;
 	}
-	ft_send_signal(argv[1], '\n');
-	return (0);
+	if ((unsigned char)c == '\0')
+		return ((char *)s + i);
+	return (NULL);
 }

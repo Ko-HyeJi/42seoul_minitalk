@@ -1,43 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:23 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 16:16:41 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/03 19:11:45 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/15 22:12:40 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_signal_handler(int sig)
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	static char	c;
-	static int	i;
+	size_t	i;
+	size_t	src_len;
 
-	if (i < 8)
+	i = 0;
+	src_len = ft_strlen(src);
+	if (dstsize != 0)
 	{
-		c = c << 1;
-		if (sig == SIGUSR2)
-			c += 1;
-		i++;
+		while (i < (dstsize - 1) && src[i] != '\0')
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
 	}
-	if (i == 8)
-	{
-		write(1, &c, 1);
-		c = 0;
-		i = 0;
-	}
-}
-
-int	main(void)
-{
-	ft_printf("PID : %d\n", getpid());
-	signal(SIGUSR1, &ft_signal_handler);
-	signal(SIGUSR2, &ft_signal_handler);
-	while (1)
-		pause();
-	return (0);
+	return (src_len);
 }

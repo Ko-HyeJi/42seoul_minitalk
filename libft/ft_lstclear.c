@@ -1,43 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:23 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 16:16:41 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/12 14:18:36 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/17 00:50:15 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_signal_handler(int sig)
+void	ft_lstclear(t_list **lst, void (del)(void*))
 {
-	static char	c;
-	static int	i;
+	t_list	*curr;
 
-	if (i < 8)
+	if (lst == NULL || del == NULL)
+		return ;
+	while (*lst != NULL)
 	{
-		c = c << 1;
-		if (sig == SIGUSR2)
-			c += 1;
-		i++;
+		curr = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = curr;
 	}
-	if (i == 8)
-	{
-		write(1, &c, 1);
-		c = 0;
-		i = 0;
-	}
-}
-
-int	main(void)
-{
-	ft_printf("PID : %d\n", getpid());
-	signal(SIGUSR1, &ft_signal_handler);
-	signal(SIGUSR2, &ft_signal_handler);
-	while (1)
-		pause();
-	return (0);
 }

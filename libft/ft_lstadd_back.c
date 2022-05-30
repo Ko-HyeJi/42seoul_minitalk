@@ -1,43 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:23 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 16:16:41 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/12 14:17:31 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/17 00:19:55 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_signal_handler(int sig)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	static char	c;
-	static int	i;
+	t_list	*last;
 
-	if (i < 8)
+	if (lst == NULL || new == NULL)
+		return ;
+	if (*lst == NULL)
 	{
-		c = c << 1;
-		if (sig == SIGUSR2)
-			c += 1;
-		i++;
+		*lst = new;
+		return ;
 	}
-	if (i == 8)
-	{
-		write(1, &c, 1);
-		c = 0;
-		i = 0;
-	}
-}
-
-int	main(void)
-{
-	ft_printf("PID : %d\n", getpid());
-	signal(SIGUSR1, &ft_signal_handler);
-	signal(SIGUSR2, &ft_signal_handler);
-	while (1)
-		pause();
-	return (0);
+	last = ft_lstlast(*lst);
+	last->next = new;
 }

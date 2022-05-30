@@ -1,48 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:28 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 15:53:32 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/03 19:12:05 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/15 23:33:25 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_send_signal(char *pid, char c)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	int	i;
-
-	i = 7;
-	while (i >= 0)
-	{
-		if ((c >> i) % 2 == 0)
-			kill(ft_atoi(pid), SIGUSR1);
-		else
-			kill(ft_atoi(pid), SIGUSR2);
-		i--;
-		usleep(100);
-	}
-}
-
-int	main(int argc, char *argv[])
-{
-	int	i;
+	size_t			i;
+	unsigned char	*cp_s1;
+	unsigned char	*cp_s2;
 
 	i = 0;
-	if (argc != 3)
+	cp_s1 = (unsigned char *)s1;
+	cp_s2 = (unsigned char *)s2;
+	while (i < n && cp_s1[i] != '\0')
 	{
-		ft_printf("./client [PID] [MSG]\n");
-		return (0);
-	}
-	while (argv[2][i])
-	{
-		ft_send_signal(argv[1], argv[2][i]);
+		if (cp_s1[i] != cp_s2[i])
+			return (cp_s1[i] - cp_s2[i]);
 		i++;
 	}
-	ft_send_signal(argv[1], '\n');
+	if (cp_s1[i] == '\0' && i < n)
+		return (cp_s1[i] - cp_s2[i]);
 	return (0);
 }

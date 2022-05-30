@@ -1,43 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/26 20:06:23 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 16:16:41 by hyko             ###   ########.fr       */
+/*   Created: 2022/01/03 19:10:19 by hyko              #+#    #+#             */
+/*   Updated: 2022/01/16 01:42:39 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "libft.h"
 
-void	ft_signal_handler(int sig)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	static char	c;
-	static int	i;
+	unsigned char	*d;
+	unsigned char	*s;
+	size_t			i;
 
-	if (i < 8)
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	i = 0;
+	if (d < s)
 	{
-		c = c << 1;
-		if (sig == SIGUSR2)
-			c += 1;
-		i++;
-	}
-	if (i == 8)
+		while (i < len)
+		{
+			d[i] = s[i];
+			i++;
+		}
+	}		
+	else if (d > s)
 	{
-		write(1, &c, 1);
-		c = 0;
-		i = 0;
+		while (i < len)
+		{
+			d[len - 1 - i] = s[len - 1 - i];
+			i++;
+		}	
 	}
-}
-
-int	main(void)
-{
-	ft_printf("PID : %d\n", getpid());
-	signal(SIGUSR1, &ft_signal_handler);
-	signal(SIGUSR2, &ft_signal_handler);
-	while (1)
-		pause();
-	return (0);
+	return (dst);
 }
