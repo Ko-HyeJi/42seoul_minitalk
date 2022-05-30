@@ -6,7 +6,7 @@
 #    By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/26 20:06:31 by hyko              #+#    #+#              #
-#    Updated: 2022/05/29 16:09:10 by hyko             ###   ########.fr        #
+#    Updated: 2022/05/30 19:44:01 by hyko             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SERVER_OBJS = $(addprefix $(OBJ_DIR)/, $(SERVER_FILES:.c=.o))
 CLIENT_OBJS = $(addprefix $(OBJ_DIR)/, $(CLIENT_FILES:.c=.o))
 
 CFLAGS = -Wall -Werror -Wextra
-CC = gcc
+CC = cc
 RM = rm -rf
 
 all: $(NAME)
