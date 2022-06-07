@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 20:06:28 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 16:28:49 by hyko             ###   ########.fr       */
+/*   Updated: 2022/06/05 20:07:49 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char *argv[])
 	i = 0;
 	if (argc != 3)
 	{
-		ft_printf("./client [PID] [MSG]\n");
+		write(1, "./client [PID] [MSG]\n", 21);
 		return (0);
 	}
 	while (argv[2][i])

@@ -6,7 +6,7 @@
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 20:06:23 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 16:27:48 by hyko             ###   ########.fr       */
+/*   Updated: 2022/06/05 20:08:12 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	ft_signal_handler(int sig)
 
 int	main(void)
 {
-	ft_printf("PID : %d\n", getpid());
+	write(1, "PID : ", 6);
+	ft_putnbr(getpid());
+	write(1, "\n", 1);
 	signal(SIGUSR1, &ft_signal_handler);
 	signal(SIGUSR2, &ft_signal_handler);
 	while (1)

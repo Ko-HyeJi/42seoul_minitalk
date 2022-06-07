@@ -5,16 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/27 20:27:05 by hyko              #+#    #+#             */
-/*   Updated: 2022/05/30 16:15:12 by hyko             ###   ########.fr       */
+/*   Created: 2022/06/05 20:05:33 by hyko              #+#    #+#             */
+/*   Updated: 2022/06/05 20:13:10 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf/ft_printf.h"
-#include "libft/libft.h"
-#include <signal.h>
-#include <unistd.h>
-#include <stdio.h>
+#ifndef MINITALK_H
+# define MINITALK_H
+
+# include <signal.h>
+# include <unistd.h>
 
 void	ft_signal_handler(int sig);
 void	ft_send_signal(char *pid, char c);
+void	ft_putchar(char c);
+void	ft_putnbr(int nb);
+int		ft_atoi(const char *str);
+
+#endif
