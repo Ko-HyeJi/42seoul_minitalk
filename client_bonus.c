@@ -1,48 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk_utils.c                                   :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyko <hyko@student.42seoul.kr>             +#+  +:+       +#+        */
+/*   By: hyko <hyko@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/05 20:06:05 by hyko              #+#    #+#             */
-/*   Updated: 2022/06/05 20:10:41 by hyko             ###   ########.fr       */
+/*   Created: 2022/05/26 20:06:28 by hyko              #+#    #+#             */
+/*   Updated: 2022/06/07 19:32:51 by hyko             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
-
-void	ft_putchar(char c)
-{
-	write(1, &c, 1);
-}
-
-void	ft_putnbr(int nb)
-{
-	if (nb >= 0)
-	{
-		if (nb < 10)
-			ft_putchar(nb + '0');
-		else
-		{
-			ft_putnbr(nb / 10);
-			ft_putnbr(nb % 10);
-		}
-	}
-	else if (nb == -2147483648)
-		write(1, "-2147483648", 11);
-	else
-	{
-		write(1, "-", 1);
-		if (-10 < nb)
-			ft_putchar(nb * -1 + '0');
-		else
-		{
-			ft_putnbr(nb * -1 / 10);
-			ft_putnbr(nb * -1 % 10);
-		}
-	}
-}
+#include <signal.h>
+#include <unistd.h>
 
 int	ft_atoi(const char *str)
 {
@@ -71,4 +40,41 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (result * sign);
+}
+
+void	ft_send_signal(int pid, char c)
+{
+	int	i;
+
+	i = 7;
+	while (i >= 0)
+	{
+		if ((c >> i) % 2 == 0)
+			kill(pid, SIGUSR1);
+		else
+			kill(pid, SIGUSR2);
+		i--;
+		usleep(100);
+	}
+}
+
+int	main(int argc, char *argv[])
+{
+	int	i;
+	int	pid;
+
+	i = 0;
+	if (argc != 3)
+	{
+		write(1, "./client [PID] [MSG]\n", 21);
+		return (0);
+	}
+	pid = ft_atoi(argv[1]);
+	while (argv[2][i])
+	{
+		ft_send_signal(pid, argv[2][i]);
+		i++;
+	}
+	ft_send_signal(pid, '\n');
+	return (0);
 }
